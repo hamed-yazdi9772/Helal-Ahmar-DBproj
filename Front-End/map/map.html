@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1F">
+
+    <title>نقشه بحران | سامانه مدیریت بحران</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="./map.css">
+
+    <!-- آیکون‌های Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar" id="sidebar" aria-label="منوی اصلی">
+
+            <!-- دکمه بستن سایدبار در موبایل -->
+            <button class="sidebar-close icon-button" id="sidebarClose"
+                type="button" aria-label="بستن منو">
+                <i data-lucide="x"></i>
+            </button>
+
+            <!-- لوگو و عنوان سامانه -->
+            <div class="brand">
+
+                <div class="brand-icon">
+                    <svg viewBox="0 0 48 48"
+                        xmlns="http://www.w3.org/2000/svg"
+                        role="img"
+                        aria-label="نشان هلال قرمز">
+
+                        <circle cx="24" cy="24" r="19" fill="#E31E24"/>
+                        <circle cx="32" cy="17" r="17" fill="#FFFFFF"/>
+
+                    </svg>
+                </div>
+
+                <div class="brand-text">
+                    <h2>سامانه مدیریت بحران</h2>
+                    <span>با همکاری جمعیت هلال احمر</span>
+                </div>
+
+            </div>
+
+            <div class="sidebar-section">
+
+                <span class="sidebar-label">منوی اصلی</span>
+
+                <nav class="sidebar-nav">
+
+                    <a href="./map.html" class="nav-item active">
+                        <i data-lucide="map"></i>
+                        <span>نقشه بحران</span>
+                    </a>
+
+                    <a href="../managerDashboard/dashboard.html" class="nav-item">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>داشبورد مدیر</span>
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        <i data-lucide="sirene"></i>
+                        <span>حادثه‌ها</span>
+                        <span class="nav-badge">۳</span>
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>مناطق</span>
+                    </a>
+
+                    <a href="../managerNeeds/needs.html" class="nav-item">
+                        <i data-lucide="clipboard-list"></i>
+                        <span>نیازها</span>
+                        <span class="nav-badge">۲۸</span>
+                    </a>
+
+                    <a href="../team/team.html" class="nav-item">
+                        <i data-lucide="users"></i>
+                        <span>تیم‌های امدادی</span>
+                    </a>
+
+                    <!-- بخش داوطلبان -->
+                    <a href="../volunteers/volunteers.html" class="nav-item">
+                        <i data-lucide="user-round-check"></i>
+                        <span>داوطلبان</span>
+                    </a>
+
+                    <!-- بخش تخصیص -->
+                    <a href="../allocation/allocation.html" class="nav-item">
+                        <i data-lucide="clipboard-check"></i>
+                        <span>تخصیص</span>
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        <i data-lucide="package"></i>
+                        <span>منابع و انبار</span>
+                    </a>
+
+                    <a href="#" class="nav-item">
+                        <i data-lucide="chart-no-axes-combined"></i>
+                        <span>گزارش‌ها</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+            <!-- پایین سایدبار -->
+            <div class="sidebar-footer">
+
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <span>سامانه فعال است</span>
+                </div>
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar">
+                        <i data-lucide="user-round"></i>
+                    </div>
+
+                    <div class="user-info">
+                        <strong>مدیر سیستم</strong>
+                        <span>مدیر بحران</span>
+                    </div>
+
+                    <i data-lucide="more-vertical"></i>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- پس‌زمینه هنگام باز بودن سایدبار -->
+        <button class="sidebar-backdrop"
+            id="sidebarBackdrop"
+            type="button"
+            aria-label="بستن منو">
+        </button>
+
+
+        <!-- محتوای اصلی -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="topbar">
+
+                <div class="topbar-right">
+
+                    <button class="icon-button"
+                        id="sidebarToggle"
+                        aria-label="باز و بسته کردن منو">
+
+                        <i data-lucide="panel-right"></i>
+
+                    </button>
+
+                    <div class="page-heading">
+                        <h1>نقشه بحران</h1>
+                        <p>نمای کلی وضعیت مناطق و نیازهای امدادی</p>
+                    </div>
+
+                </div>
+
+                <div class="topbar-left">
+
+                    <div class="system-status">
+                        <span class="status-dot"></span>
+                        <span>وضعیت سامانه: آنلاین</span>
+                    </div>
+
+                    <button class="icon-button" aria-label="اعلان‌ها">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <button class="icon-button"
+                        id="themeToggle"
+                        aria-label="تغییر پوسته">
+
+                        <i data-lucide="moon"></i>
+
+                    </button>
+
+                    <div class="header-profile">
+
+                        <div class="user-avatar">
+                            <i data-lucide="user-round"></i>
+                        </div>
+
+                        <span>مدیر سیستم</span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- محتوای صفحه -->
+            <section class="page-content">
+
+                <!-- معرفی صفحه -->
+                <div class="page-intro">
+
+                    <div>
+                        <h2>مرکز پایش بحران</h2>
+
+                        <p>
+                            مشاهده موقعیت مناطق، حادثه‌ها و نیازهای امدادی
+                        </p>
+                    </div>
+
+                    <div class="intro-date">
+                        <i data-lucide="calendar-days"></i>
+                        <span>نمایش اطلاعات مناطق</span>
+                    </div>
+
+                </div>
+
+
+                <!-- کارت‌های آماری -->
+                <section class="stats-grid">
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon red">
+                            <i data-lucide="map-pinned"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>تعداد مناطق</span>
+                            <strong id="totalRegions">۵</strong>
+                            <small>مناطق ثبت‌شده</small>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon orange">
+                            <i data-lucide="alert-triangle"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>مناطق بحرانی</span>
+                            <strong id="criticalRegions">۲</strong>
+                            <small>نیازمند رسیدگی فوری</small>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon green">
+                            <i data-lucide="users-round"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>تیم‌های فعال</span>
+                            <strong id="activeTeams">۱۲</strong>
+                            <small>تیم امدادی آماده فعالیت</small>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon blue">
+                            <i data-lucide="package-open"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>نیازهای تأمین‌نشده</span>
+                            <strong id="unmetNeeds">۲۸</strong>
+                            <small>در انتظار تخصیص منابع</small>
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- نقشه و جزئیات -->
+                <section class="map-layout">
+
+                    <!-- پنل نقشه -->
+                    <div class="map-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>
+                                    <i data-lucide="map"></i>
+                                    نقشه تعاملی بحران
+                                </h3>
+
+                                <p>موقعیت مناطق و نیازهای ثبت‌شده</p>
+                            </div>
+
+                            <div class="map-actions">
+
+                                <button class="icon-button"
+                                    id="locateBtn"
+                                    title="موقعیت‌یابی">
+
+                                    <i data-lucide="locate-fixed"></i>
+
+                                </button>
+
+                                <button class="icon-button"
+                                    id="fullscreenBtn"
+                                    title="تمام صفحه">
+
+                                    <i data-lucide="maximize"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- فیلترهای نقشه -->
+                        <div class="map-filters">
+
+                            <div class="search-box">
+
+                                <i data-lucide="search"></i>
+
+                                <input
+                                    type="text"
+                                    id="searchInput"
+                                    placeholder="جست‌وجوی منطقه...">
+
+                            </div>
+
+
+                            <select id="severityFilter">
+
+                                <option value="all">همه شدت‌ها</option>
+                                <option value="critical">بحرانی</option>
+                                <option value="high">زیاد</option>
+                                <option value="medium">متوسط</option>
+                                <option value="low">کم</option>
+
+                            </select>
+
+
+                            <select id="needFilter">
+
+                                <option value="all">همه نیازها</option>
+                                <option value="uncovered">تأمین‌نشده</option>
+                                <option value="covered">تأمین‌شده</option>
+
+                            </select>
+
+
+                            <button class="reset-button" id="resetFilters">
+
+                                <i data-lucide="rotate-ccw"></i>
+                                پاک‌کردن فیلترها
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- نقشه -->
+                        <div id="mapWrap" class="map-wrap">
+
+                            <div id="crisisMap"></div>
+
+                            <div class="map-counter">
+                                <i data-lucide="map-pin"></i>
+                                <span id="visibleCount">۵ منطقه</span>
+                            </div>
+
+                        </div>
+
+
+                        <!-- راهنمای نقشه -->
+                        <div class="map-legend">
+
+                            <div class="legend-item">
+                                <span class="legend-marker red-marker"></span>
+                                <span>نیاز فوری</span>
+                            </div>
+
+                            <div class="legend-item">
+                                <span class="legend-marker orange-marker"></span>
+                                <span>نیاز با اولویت بالا</span>
+                            </div>
+
+                            <div class="legend-item">
+                                <span class="legend-marker green-marker"></span>
+                                <span>نیاز تأمین‌شده</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- جزئیات منطقه -->
+                    <aside class="details-panel" id="regionDetails">
+
+                        <div class="details-header">
+
+                            <div>
+                                <h3>
+                                    <i data-lucide="panel-right-open"></i>
+                                    جزئیات منطقه
+                                </h3>
+
+                                <p>اطلاعات منطقه انتخاب‌شده</p>
+                            </div>
+
+                            <button class="icon-button"
+                                id="closeDetails"
+                                aria-label="بستن جزئیات">
+
+                                <i data-lucide="x"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="details-content">
+
+                            <!-- پیام اولیه -->
+                            <div class="empty-details">
+
+                                <div class="empty-icon">
+                                    <i data-lucide="map-pinned"></i>
+                                </div>
+
+                                <strong>منطقه‌ای انتخاب نشده است</strong>
+
+                                <p>
+                                    برای مشاهده اطلاعات، یکی از نشانگرهای
+                                    روی نقشه را انتخاب کنید.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </section>
+
+
+                <!-- بخش‌های پایینی -->
+                <section class="bottom-grid">
+
+                    <!-- جدول مناطق -->
+                    <div class="regions-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>
+                                    <i data-lucide="list-filter"></i>
+                                    وضعیت مناطق
+                                </h3>
+
+                                <p>خلاصه وضعیت مناطق ثبت‌شده</p>
+                            </div>
+
+                            <button class="text-button">
+
+                                مشاهده همه
+                                <i data-lucide="arrow-left"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="table-container">
+
+                            <table>
+
+                                <thead>
+                                    <tr>
+                                        <th>نام منطقه</th>
+                                        <th>شدت بحران</th>
+                                        <th>تعداد نیازها</th>
+                                        <th>وضعیت پوشش</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="regionsTable">
+                                    <!-- اطلاعات مناطق توسط JavaScript درج می‌شود -->
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- آخرین فعالیت‌ها -->
+                    <div class="activity-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>
+                                    <i data-lucide="activity"></i>
+                                    آخرین فعالیت‌ها
+                                </h3>
+
+                                <p>رویدادهای اخیر سامانه</p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-list">
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon red">
+                                    <i data-lucide="alert-circle"></i>
+                                </div>
+
+                                <div>
+                                    <strong>ثبت نیاز جدید</strong>
+                                    <span>یک نیاز جدید در سامانه ثبت شد</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon green">
+                                    <i data-lucide="check-circle-2"></i>
+                                </div>
+
+                                <div>
+                                    <strong>تخصیص منابع</strong>
+                                    <span>یک تخصیص جدید ثبت شده است</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon blue">
+                                    <i data-lucide="users"></i>
+                                </div>
+
+                                <div>
+                                    <strong>فعالیت تیم امدادی</strong>
+                                    <span>اطلاعات یک تیم به‌روزرسانی شد</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- کتابخانه‌ها -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- فایل JavaScript پروژه -->
+    <script src="./map.js"></script>
+
+    <!-- راه‌اندازی آیکون‌ها -->
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>

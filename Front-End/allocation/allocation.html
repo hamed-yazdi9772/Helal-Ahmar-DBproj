@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1F">
+
+    <title>مدیریت تخصیص‌ها | سامانه مدیریت بحران</title>
+
+    <link rel="stylesheet" href="../managerDashboard/dashboard.css">
+    <link rel="stylesheet" href="./allocation.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نشان هلال قرمز">
+                        <circle cx="24" cy="24" r="19" fill="#E31E24" />
+                        <circle cx="32" cy="17" r="17" fill="#FFFFFF" />
+                    </svg>
+                </div>
+
+                <div class="brand-text">
+                    <h2>سامانه مدیریت بحران</h2>
+                    <span>با همکاری جمعیت هلال احمر</span>
+                </div>
+
+                <button class="sidebar-close" id="sidebarClose" aria-label="بستن منو">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <span class="sidebar-label">منوی اصلی</span>
+
+                <nav class="sidebar-nav">
+
+                    <a class="nav-item" href="../map/map.html">
+                        <i data-lucide="map"></i>
+                        <span>نقشه بحران</span>
+                    </a>
+
+                    <a class="nav-item" href="../managerDashboard/dashboard.html">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>داشبورد مدیر</span>
+                    </a>
+
+                    <a class="nav-item" href="../incidents/incidents.html">
+                        <i data-lucide="siren"></i>
+                        <span>حادثه‌ها</span>
+                    </a>
+
+                    <a class="nav-item" href="../regions/regions.html">
+                        <i data-lucide="map-pin"></i>
+                        <span>مناطق</span>
+                    </a>
+
+                    <a class="nav-item" href="../managerNeeds/needs.html">
+                        <i data-lucide="clipboard-list"></i>
+                        <span>نیازها</span>
+                    </a>
+
+                    <a class="nav-item" href="../team/team.html">
+                        <i data-lucide="users-round"></i>
+                        <span>تیم‌های امدادی</span>
+                    </a>
+
+
+                    <a class="nav-item" href="../volunteers/volunteers.html">
+                        <i data-lucide="user-round"></i>
+                        <span>داوطلبان</span>
+                    </a>
+                    
+                    <a class="nav-item active" href="../allocation/allocation.html">
+                        <i data-lucide="clipboard-check"></i>
+                        <span>تخصیص</span>
+                    </a>
+
+                    <a class="nav-item" href="../resources/resources.html">
+                        <i data-lucide="package"></i>
+                        <span>منابع و انبار</span>
+                    </a>
+
+                    <a class="nav-item" href="../reports/reports.html">
+                        <i data-lucide="chart-no-axes-combined"></i>
+                        <span>گزارش‌ها</span>
+                    </a>
+
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <span>سامانه فعال است</span>
+                </div>
+
+                <div class="sidebar-user">
+                    <div class="user-avatar">
+                        <i data-lucide="user-round"></i>
+                    </div>
+
+                    <div class="user-info">
+                        <strong>مدیر سیستم</strong>
+                        <span>مدیر بحران</span>
+                    </div>
+
+                    <span>⋮</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="topbar">
+
+                <div class="topbar-right">
+
+                    <button class="icon-button" id="sidebarToggle" aria-label="باز و بسته کردن منو"
+                        aria-expanded="false">
+                        <i data-lucide="panel-right"></i>
+                    </button>
+
+                    <div class="page-heading">
+                        <h1>مدیریت تخصیص‌ها</h1>
+                        <p>تخصیص منابع و تیم‌های امدادی به نیازهای ثبت‌شده</p>
+                    </div>
+
+                </div>
+
+                <div class="topbar-left">
+
+                    <div class="system-status">
+                        <span class="status-dot"></span>
+                        وضعیت سامانه: آنلاین
+                    </div>
+
+                    <button class="icon-button notification" aria-label="اعلان‌ها">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <button class="icon-button" id="themeToggle" aria-label="تغییر پوسته">
+                        <i data-lucide="moon"></i>
+                    </button>
+
+                    <div class="header-profile">
+                        <div class="user-avatar">
+                            <i data-lucide="user-round"></i>
+                        </div>
+                        <span>مدیر سیستم</span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- Page Content -->
+            <section class="page-content allocation-page">
+
+                <div class="page-intro">
+
+                    <div>
+                        <h2>تخصیص منابع و تیم‌ها</h2>
+                        <p>
+                            مدیریت ارتباط میان نیازها، تیم‌های امدادی و منابع موجود
+                        </p>
+                    </div>
+
+                    <div class="intro-actions">
+
+                        <div class="intro-date" id="todayLabel">
+                            <i data-lucide="calendar-days"></i>
+                            امروز
+                        </div>
+
+                        <button class="primary-button" id="newAllocationBtn">
+                            <i data-lucide="plus"></i>
+                            ثبت تخصیص جدید
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Notice -->
+                <div class="allocation-notice">
+                    <div class="notice-icon">
+                        <i data-lucide="info"></i>
+                    </div>
+
+                    <div>
+                        <strong>مدیریت هوشمند تخصیص</strong>
+                        <p>
+                            پیش از ثبت تخصیص، موجودی منابع و تداخل زمانی بررسی می‌شود.
+                            اطلاعات این نسخه آزمایشی است.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Statistics -->
+                <section class="stats-grid">
+
+                    <article class="stat-card">
+                        <div class="stat-icon red">
+                            <i data-lucide="clipboard-list"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>کل تخصیص‌ها</span>
+                            <strong id="totalAllocations">۰</strong>
+                            <small>تمام تخصیص‌های ثبت‌شده</small>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon green">
+                            <i data-lucide="check-circle-2"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>تخصیص‌های فعال</span>
+                            <strong id="activeAllocations">۰</strong>
+                            <small>در حال اجرا</small>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon blue">
+                            <i data-lucide="clock"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>در انتظار اجرا</span>
+                            <strong id="pendingAllocations">۰</strong>
+                            <small>تخصیص‌های برنامه‌ریزی‌شده</small>
+                        </div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon orange">
+                            <i data-lucide="package-check"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>مقدار تخصیص‌یافته</span>
+                            <strong id="totalAllocatedAmount">۰</strong>
+                            <small>مجموع مقدار منابع تخصیص‌یافته</small>
+                        </div>
+                    </article>
+
+                </section>
+
+
+                <!-- Inventory Overview -->
+                <section class="panel inventory-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>وضعیت موجودی منابع</h3>
+                            <p>بررسی موجودی قبل از تخصیص منابع</p>
+                        </div>
+
+                        <span class="panel-tag">
+                            <i data-lucide="warehouse"></i>
+                            موجودی انبار
+                        </span>
+
+                    </div>
+
+                    <div class="inventory-grid" id="inventoryGrid">
+                        <!-- JavaScript -->
+                    </div>
+
+                </section>
+
+
+                <!-- Allocation List -->
+                <section class="panel allocation-list-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>فهرست تخصیص‌ها</h3>
+                            <p>مشاهده و مدیریت تخصیص‌های ثبت‌شده</p>
+                        </div>
+
+                        <span class="panel-tag" id="allocationCountLabel">
+                            ۰ تخصیص
+                        </span>
+
+                    </div>
+
+
+                    <!-- Filters -->
+                    <div class="allocation-toolbar">
+
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+
+                            <input type="text" id="allocationSearch"
+                                placeholder="جستجو بر اساس کد، نیاز، تیم یا منبع...">
+                        </div>
+
+                        <select id="statusFilter" class="filter-select">
+                            <option value="all">تمام وضعیت‌ها</option>
+                            <option value="pending">در انتظار اجرا</option>
+                            <option value="active">در حال اجرا</option>
+                            <option value="completed">تکمیل‌شده</option>
+                            <option value="cancelled">لغوشده</option>
+                        </select>
+
+                        <button class="filter-button" id="resetFilters">
+                            <i data-lucide="rotate-ccw"></i>
+                            پاک کردن فیلترها
+                        </button>
+
+                    </div>
+
+
+                    <!-- Table -->
+                    <div class="table-wrapper">
+
+                        <table class="allocation-table">
+
+                            <thead>
+                                <tr>
+                                    <th>کد تخصیص</th>
+                                    <th>نیاز</th>
+                                    <th>تیم امدادی</th>
+                                    <th>منبع</th>
+                                    <th>مقدار</th>
+                                    <th>شروع</th>
+                                    <th>پایان</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="allocationTableBody">
+                                <!-- JavaScript -->
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div class="empty-state" id="allocationEmptyState" hidden>
+
+                        <div class="empty-icon">
+                            <i data-lucide="clipboard-x"></i>
+                        </div>
+
+                        <h3>تخصیصی پیدا نشد</h3>
+
+                        <p>
+                            با فیلتر یا عبارت جستجوی انتخاب‌شده موردی وجود ندارد.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Recent Activities -->
+                <section class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>آخرین فعالیت‌ها</h3>
+                            <p>تغییرات اخیر در بخش تخصیص</p>
+                        </div>
+                    </div>
+
+                    <div class="activity-list" id="allocationActivities">
+                        <!-- JavaScript -->
+                    </div>
+
+                </section>
+
+
+                <footer class="page-footer">
+                    <span>سامانه مدیریت بحران | با همکاری جمعیت هلال احمر</span>
+                    <span id="lastUpdated"></span>
+                </footer>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- New Allocation Modal -->
+    <div class="modal-overlay" id="allocationModal" hidden>
+
+        <div class="custom-modal allocation-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3 id="modalTitle">ثبت تخصیص جدید</h3>
+                    <p>اطلاعات نیاز، تیم و منبع را مشخص کنید.</p>
+                </div>
+
+                <button class="modal-close" data-close="allocationModal">
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+
+            <form id="allocationForm">
+
+                <input type="hidden" id="editingAllocationId">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="needSelect">انتخاب نیاز</label>
+
+                        <select class="form-control" id="needSelect" required>
+                            <option value="">انتخاب نیاز</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="teamSelect">انتخاب تیم امدادی</label>
+
+                        <select class="form-control" id="teamSelect" required>
+                            <option value="">انتخاب تیم</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="resourceSelect">انتخاب منبع</label>
+
+                        <select class="form-control" id="resourceSelect" required>
+                            <option value="">انتخاب منبع</option>
+                        </select>
+
+                        <small class="field-hint" id="resourceStockHint">
+                            ابتدا یک منبع انتخاب کنید.
+                        </small>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="allocationAmount">مقدار تخصیص</label>
+
+                        <input class="form-control" type="number" id="allocationAmount" min="1" step="1"
+                            placeholder="مقدار موردنظر" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="startDate">زمان شروع</label>
+
+                        <input class="form-control" type="datetime-local" id="startDate" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="endDate">زمان پایان</label>
+
+                        <input class="form-control" type="datetime-local" id="endDate" required>
+                    </div>
+
+
+                    <div class="form-group full-width">
+                        <label for="allocationStatus">وضعیت تخصیص</label>
+
+                        <select class="form-control" id="allocationStatus">
+                            <option value="pending">در انتظار اجرا</option>
+                            <option value="active">در حال اجرا</option>
+                            <option value="completed">تکمیل‌شده</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <!-- Need Information -->
+                <div class="selection-summary" id="needSummary">
+                    <i data-lucide="info"></i>
+                    <span>با انتخاب نیاز، اطلاعات آن نمایش داده می‌شود.</span>
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button type="button" class="secondary-button" data-close="allocationModal">
+                        انصراف
+                    </button>
+
+                    <button type="submit" class="primary-button">
+                        <i data-lucide="check"></i>
+                        ثبت تخصیص
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Details Modal -->
+    <div class="modal-overlay" id="detailsModal" hidden>
+
+        <div class="custom-modal details-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3>جزئیات تخصیص</h3>
+                    <p id="detailsAllocationCode"></p>
+                </div>
+
+                <button class="modal-close" data-close="detailsModal">
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+            <div id="allocationDetailsContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Toast -->
+    <div class="toast-message" id="toastMessage">
+        <i data-lucide="check-circle-2"></i>
+        <span id="toastText"></span>
+    </div>
+
+
+    <script src="./allocation.js"></script>
+
+</body>
+
+</html>

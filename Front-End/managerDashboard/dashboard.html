@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#991B1F">
+
+  <title>داشبورد مدیر | سامانه مدیریت بحران</title>
+
+  <link rel="stylesheet" href="./dashboard.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="منوی اصلی">
+
+      <!-- Brand -->
+      <div class="brand">
+
+        <div class="brand-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نشان هلال قرمز">
+
+            <circle cx="24" cy="24" r="19" fill="#E31E24" />
+            <circle cx="32" cy="17" r="17" fill="#FFFFFF" />
+
+          </svg>
+        </div>
+
+        <div class="brand-text">
+          <h2>سامانه مدیریت بحران</h2>
+          <span>با همکاری جمعیت هلال احمر</span>
+        </div>
+
+        <button class="sidebar-close" id="sidebarClose" aria-label="بستن منو">
+
+          <i data-lucide="x"></i>
+
+        </button>
+
+      </div>
+
+      <!-- Main Navigation -->
+      <div class="sidebar-section">
+
+        <span class="sidebar-label">منوی اصلی</span>
+
+        <nav class="sidebar-nav">
+
+          <a class="nav-item" href="../map/map.html">
+            <i data-lucide="map"></i>
+            <span>نقشه بحران</span>
+          </a>
+
+          <a class="nav-item active" href="./dashboard.html">
+            <i data-lucide="layout-dashboard"></i>
+            <span>داشبورد مدیر</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <i data-lucide="siren"></i>
+            <span>حادثه‌ها</span>
+            <b class="nav-badge">۴</b>
+          </a>
+
+          <a class="nav-item" href="#">
+            <i data-lucide="map-pin"></i>
+            <span>مناطق</span>
+          </a>
+
+          <a class="nav-item" href="../managerNeeds/needs.html">
+            <i data-lucide="clipboard-list"></i>
+            <span>نیازها</span>
+            <b class="nav-badge">۹</b>
+          </a>
+
+          <a class="nav-item" href="../team/team.html">
+            <i data-lucide="users-round"></i>
+            <span>تیم‌های امدادی</span>
+          </a>
+
+
+          <a class="nav-item" href="#">
+            <i data-lucide="user-round"></i>
+            <span>داوطلبان</span>
+          </a>
+          <a class="nav-item" href="../allocation/allocation.html">
+            <i data-lucide="clipboard-check"></i>
+            <span>تخصیص</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <i data-lucide="package"></i>
+            <span>منابع و انبار</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <i data-lucide="chart-no-axes-combined"></i>
+            <span>گزارش‌ها</span>
+          </a>
+
+        </nav>
+
+      </div>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+
+        <div class="sidebar-status">
+          <span class="status-dot"></span>
+          <span>سامانه فعال است</span>
+        </div>
+
+        <div class="sidebar-user">
+
+          <div class="user-avatar">
+            <i data-lucide="user-round"></i>
+          </div>
+
+          <div class="user-info">
+            <strong>مدیر سیستم</strong>
+            <span>مدیر بحران</span>
+          </div>
+
+          <span>⋮</span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Topbar -->
+      <header class="topbar">
+
+        <div class="topbar-right">
+
+          <button class="icon-button" id="sidebarToggle" aria-label="باز و بسته کردن منو" aria-expanded="false">
+
+            <i data-lucide="panel-right"></i>
+
+          </button>
+
+          <div class="page-heading">
+
+            <h1>داشبورد مدیر</h1>
+
+            <p>
+              نمای کلی عملیات و وضعیت مدیریت بحران
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="topbar-left">
+
+          <div class="system-status">
+            <span class="status-dot"></span>
+            وضعیت سامانه: آنلاین
+          </div>
+
+          <button class="icon-button notification" aria-label="اعلان‌ها">
+
+            <i data-lucide="bell"></i>
+            <span class="notification-dot"></span>
+
+          </button>
+
+          <button class="icon-button" id="themeToggle" aria-label="تغییر پوسته">
+
+            <i data-lucide="moon"></i>
+
+          </button>
+
+          <div class="header-profile">
+
+            <div class="user-avatar">
+              <i data-lucide="user-round"></i>
+            </div>
+
+            <span>مدیر سیستم</span>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- Page Content -->
+      <section class="page-content">
+
+        <!-- Page Intro -->
+        <div class="page-intro">
+
+          <div>
+
+            <h2>مرکز مدیریت عملیات بحران</h2>
+
+            <p>
+              خلاصه وضعیت نیازها، تیم‌ها، منابع و حادثه‌های ثبت‌شده
+            </p>
+
+          </div>
+
+          <div class="intro-actions">
+
+            <div class="intro-date" id="todayLabel">
+
+              <i data-lucide="calendar-days"></i>
+              امروز
+
+            </div>
+
+            <button class="primary-button" id="refreshBtn">
+
+              <i data-lucide="refresh-cw"></i>
+              به‌روزرسانی
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- Notice -->
+        <div class="notice">
+
+          <span class="notice-icon">
+            <i data-lucide="info"></i>
+          </span>
+
+          <span>
+            اطلاعات این داشبورد نمونه و آزمایشی است و هنوز به پایگاه داده SQL Server متصل نشده است.
+          </span>
+
+        </div>
+
+        <!-- Statistics -->
+        <section class="stats-grid">
+
+          <article class="stat-card">
+
+            <div class="stat-icon red">
+              <i data-lucide="clipboard-list"></i>
+            </div>
+
+            <div class="stat-info">
+
+              <span>نیازهای پوشش‌داده‌نشده</span>
+
+              <strong id="uncoveredNeeds">۴</strong>
+
+              <small>نیازمند تخصیص منابع</small>
+
+            </div>
+
+          </article>
+
+          <article class="stat-card">
+
+            <div class="stat-icon green">
+              <i data-lucide="users-round"></i>
+            </div>
+
+            <div class="stat-info">
+
+              <span>تیم‌های فعال</span>
+
+              <strong id="activeTeams">۵</strong>
+
+              <small>در حال فعالیت یا آماده‌باش</small>
+
+            </div>
+
+          </article>
+
+          <article class="stat-card">
+
+            <div class="stat-icon orange">
+              <i data-lucide="package-open"></i>
+            </div>
+
+            <div class="stat-info">
+
+              <span>منابع با موجودی کم</span>
+
+              <strong id="lowResources">۳</strong>
+
+              <small>نیازمند تأمین مجدد</small>
+
+            </div>
+
+          </article>
+
+          <article class="stat-card">
+
+            <div class="stat-icon blue">
+              <i data-lucide="alert-triangle"></i>
+            </div>
+
+            <div class="stat-info">
+
+              <span>حادثه‌های ثبت‌شده</span>
+
+              <strong id="totalIncidents">۴</strong>
+
+              <small>در مناطق تحت پوشش</small>
+
+            </div>
+
+          </article>
+
+        </section>
+
+        <!-- Charts -->
+        <section class="charts-grid">
+
+          <!-- Coverage Chart -->
+          <article class="panel">
+
+            <div class="panel-header">
+
+              <div>
+
+                <h3>وضعیت پوشش نیازها</h3>
+
+                <p>
+                  مقایسه نیازهای تأمین‌شده و باقی‌مانده
+                </p>
+
+              </div>
+
+              <span class="panel-tag">آزمایشی</span>
+
+            </div>
+
+            <div class="donut-area">
+
+              <div class="donut" id="coverageDonut">
+
+                <div class="donut-center">
+
+                  <strong id="coveragePercent">۵۶٪</strong>
+
+                  <span>پوشش نیازها</span>
+
+                </div>
+
+              </div>
+
+              <div class="legend">
+
+                <div>
+
+                  <i class="legend-dot covered"></i>
+
+                  <span>پوشش کامل</span>
+
+                  <b id="coveredCount">۵</b>
+
+                </div>
+
+                <div>
+
+                  <i class="legend-dot uncovered"></i>
+
+                  <span>پوشش‌نیافته</span>
+
+                  <b id="uncoveredCount">۴</b>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <!-- Regional Needs Chart -->
+          <article class="panel">
+
+            <div class="panel-header">
+
+              <div>
+
+                <h3>نیازهای پوشش‌نیافته به تفکیک منطقه</h3>
+
+                <p>
+                  تعداد موارد باقی‌مانده در هر منطقه
+                </p>
+
+              </div>
+
+              <span class="panel-tag">
+                بر اساس داده نمونه
+              </span>
+
+            </div>
+
+            <div class="bar-chart" id="regionChart" aria-label="نمودار نیازهای پوشش‌نیافته">
+            </div>
+
+          </article>
+
+        </section>
+
+        <!-- Bottom Grid -->
+        <section class="bottom-grid">
+
+          <!-- Low Stock Resources -->
+          <article class="panel">
+
+            <div class="panel-header">
+
+              <div>
+
+                <h3>منابع با موجودی کم</h3>
+
+                <p>
+                  اقلامی که موجودی آن‌ها به حد هشدار رسیده است
+                </p>
+
+              </div>
+
+              <a href="#" class="text-link">
+                مشاهده انبار ←
+              </a>
+
+            </div>
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>نام منبع</th>
+                    <th>موجودی فعلی</th>
+                    <th>حداقل موجودی</th>
+                    <th>وضعیت</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="resourcesTable"></tbody>
+
+              </table>
+
+            </div>
+
+          </article>
+
+          <!-- Activities -->
+          <article class="panel">
+
+            <div class="panel-header">
+
+              <div>
+
+                <h3>آخرین فعالیت‌ها</h3>
+
+                <p>
+                  رویدادهای اخیر سامانه
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="activity-list" id="activityList"></div>
+
+          </article>
+
+        </section>
+
+        <!-- Operation Summary -->
+        <section class="panel operation-panel">
+
+          <div class="panel-header">
+
+            <div>
+
+              <h3>نمای کلی عملیات بحران</h3>
+
+              <p>
+                خلاصه شاخص‌های اصلی برای تصمیم‌گیری مدیر
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="operation-grid">
+
+            <div>
+
+              <span>کل نیازهای ثبت‌شده</span>
+
+              <strong id="totalNeeds">۹</strong>
+
+            </div>
+
+            <div>
+
+              <span>کل مناطق</span>
+
+              <strong>۵</strong>
+
+            </div>
+
+            <div>
+
+              <span>تخصیص‌های ثبت‌شده</span>
+
+              <strong>۹</strong>
+
+            </div>
+
+            <div>
+
+              <span>میانگین پوشش نیازها</span>
+
+              <strong id="operationCoverage">۵۶٪</strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- Footer -->
+        <footer class="page-footer">
+
+          <span>
+            سامانه مدیریت بحران | با همکاری جمعیت هلال احمر
+          </span>
+
+          <span id="lastUpdated"></span>
+
+        </footer>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="./dashboard.js"></script>
+
+</body>
+
+</html>

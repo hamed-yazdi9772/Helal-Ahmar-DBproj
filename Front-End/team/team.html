@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1F">
+
+    <title>مدیریت تیم‌ها | سامانه مدیریت بحران</title>
+
+    <link rel="stylesheet" href="../managerDashboard/dashboard.css">
+    <link rel="stylesheet" href="./team.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <!-- نوار کناری -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    <svg viewBox="0 0 48 48"
+                         xmlns="http://www.w3.org/2000/svg"
+                         role="img"
+                         aria-label="نشان هلال قرمز">
+
+                        <circle cx="24" cy="24" r="19" fill="#E31E24"/>
+                        <circle cx="32" cy="17" r="17" fill="#FFFFFF"/>
+
+                    </svg>
+                </div>
+
+                <div class="brand-text">
+                    <h2>سامانه مدیریت بحران</h2>
+                    <span>با همکاری جمعیت هلال احمر</span>
+                </div>
+
+                <button class="sidebar-close"
+                        id="sidebarClose"
+                        aria-label="بستن منو">
+
+                    <i data-lucide="x"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="sidebar-section">
+
+                <span class="sidebar-label">منوی اصلی</span>
+
+                <nav class="sidebar-nav">
+
+                    <a class="nav-item" href="../map/map.html">
+                        <i data-lucide="map"></i>
+                        <span>نقشه بحران</span>
+                    </a>
+
+                    <a class="nav-item" href="../managerDashboard/dashboard.html">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>داشبورد مدیر</span>
+                    </a>
+
+                    <a class="nav-item" href="#">
+                        <i data-lucide="siren"></i>
+                        <span>حادثه‌ها</span>
+                        <b class="nav-badge">۴</b>
+                    </a>
+
+                    <a class="nav-item" href="#">
+                        <i data-lucide="map-pin"></i>
+                        <span>مناطق</span>
+                    </a>
+
+                    <a class="nav-item" href="../managerNeeds/needs.html">
+                        <i data-lucide="clipboard-list"></i>
+                        <span>نیازها</span>
+                        <b class="nav-badge">۹</b>
+                    </a>
+
+                    <a class="nav-item active" href="../team/team.html">
+                        <i data-lucide="users-round"></i>
+                        <span>تیم‌های امدادی</span>
+                    </a>
+
+                    <a class="nav-item" href="#">
+                        <i data-lucide="user-round"></i>
+                        <span>داوطلبان</span>
+                    </a>
+
+                    <a class="nav-item" href="../allocation/allocation.html">
+                        <i data-lucide="clipboard-check"></i>
+                        <span>تخصیص</span>
+                    </a>
+
+                    <a class="nav-item" href="#">
+                        <i data-lucide="package"></i>
+                        <span>منابع و انبار</span>
+                    </a>
+
+                    <a class="nav-item" href="#">
+                        <i data-lucide="chart-no-axes-combined"></i>
+                        <span>گزارش‌ها</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <!-- وضعیت و کاربر -->
+            <div class="sidebar-footer">
+
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <span>سامانه فعال است</span>
+                </div>
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar">
+                        <i data-lucide="user-round"></i>
+                    </div>
+
+                    <div class="user-info">
+                        <strong>مدیر سیستم</strong>
+                        <span>مدیر بحران</span>
+                    </div>
+
+                    <span>⋮</span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- محتوای اصلی -->
+        <main class="main-content">
+
+            <!-- سربرگ -->
+            <header class="topbar">
+
+                <div class="topbar-right">
+
+                    <button class="icon-button"
+                            id="sidebarToggle"
+                            aria-label="باز و بسته کردن منو"
+                            aria-expanded="false">
+
+                        <i data-lucide="panel-right"></i>
+
+                    </button>
+
+                    <div class="page-heading">
+                        <h1>مدیریت تیم‌ها</h1>
+                        <p>مدیریت تیم‌های امدادی و اعضای آن‌ها</p>
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-left">
+
+                    <div class="system-status">
+                        <span class="status-dot"></span>
+                        وضعیت سامانه: آنلاین
+                    </div>
+
+                    <button class="icon-button notification"
+                            aria-label="اعلان‌ها">
+
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+
+                    </button>
+
+                    <button class="icon-button"
+                            id="themeToggle"
+                            aria-label="تغییر پوسته">
+
+                        <i data-lucide="moon"></i>
+
+                    </button>
+
+                    <div class="header-profile">
+
+                        <div class="user-avatar">
+                            <i data-lucide="user-round"></i>
+                        </div>
+
+                        <span>مدیر سیستم</span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- محتوای صفحه -->
+            <section class="page-content">
+
+                <!-- معرفی صفحه -->
+                <div class="page-intro">
+
+                    <div>
+                        <h2>تیم‌های امدادی</h2>
+
+                        <p>
+                            ایجاد تیم، مدیریت اعضا و تعیین مسئولیت داوطلبان
+                        </p>
+                    </div>
+
+                    <div class="intro-actions">
+
+                        <div class="intro-date" id="todayLabel">
+                            <i data-lucide="calendar-days"></i>
+                            امروز
+                        </div>
+
+                        <button class="primary-button" id="addTeamBtn">
+                            <i data-lucide="plus"></i>
+                            ایجاد تیم جدید
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- پیام اطلاع‌رسانی -->
+                <div class="notice">
+
+                    <span class="notice-icon">
+                        <i data-lucide="info"></i>
+                    </span>
+
+                    <span>
+                        اطلاعات تیم‌ها و داوطلبان در این نسخه آزمایشی است
+                        و هنوز به پایگاه داده SQL Server متصل نشده است.
+                    </span>
+
+                </div>
+
+
+                <!-- کارت‌های آماری -->
+                <section class="stats-grid">
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon red">
+                            <i data-lucide="users-round"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>کل تیم‌های ثبت‌شده</span>
+                            <strong id="totalTeams">۰</strong>
+                            <small>تمام تیم‌های سامانه</small>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon green">
+                            <i data-lucide="activity"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>تیم‌های فعال</span>
+                            <strong id="activeTeams">۰</strong>
+                            <small>در حال فعالیت یا آماده‌باش</small>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon blue">
+                            <i data-lucide="user-round-check"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>کل اعضای تیم‌ها</span>
+                            <strong id="totalMembers">۰</strong>
+                            <small>داوطلبان عضو تیم‌ها</small>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon orange">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+
+                        <div class="stat-info">
+                            <span>تعداد سرپرستان</span>
+                            <strong id="totalLeaders">۰</strong>
+                            <small>مسئولان تیم‌های امدادی</small>
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- فهرست تیم‌ها -->
+                <section class="panel teams-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>فهرست تیم‌های امدادی</h3>
+                            <p>مشاهده و مدیریت تیم‌های ثبت‌شده در سامانه</p>
+                        </div>
+
+                        <span class="panel-tag" id="teamCountLabel">
+                            ۰ تیم
+                        </span>
+
+                    </div>
+
+
+                    <!-- جستجو -->
+                    <div class="team-toolbar">
+
+                        <div class="search-box">
+                            <i data-lucide="search"></i>
+
+                            <input
+                                type="text"
+                                id="teamSearch"
+                                placeholder="جستجو بر اساس نام یا کد تیم..."
+                            >
+                        </div>
+
+                        <button class="filter-button" id="resetSearch">
+                            <i data-lucide="rotate-ccw"></i>
+                            پاک کردن جستجو
+                        </button>
+
+                    </div>
+
+
+                    <!-- کارت‌های تیم‌ها -->
+                    <div class="teams-grid" id="teamsGrid">
+                        <!-- تیم‌ها توسط JavaScript ساخته می‌شوند -->
+                    </div>
+
+
+                    <!-- حالت خالی -->
+                    <div class="empty-state" id="emptyState" hidden>
+
+                        <div class="empty-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+
+                        <h3>تیمی پیدا نشد</h3>
+
+                        <p>
+                            تیمی با مشخصات جستجو شده وجود ندارد.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- آخرین فعالیت‌ها -->
+                <section class="panel team-activity-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>آخرین تغییرات تیم‌ها</h3>
+                            <p>فعالیت‌های اخیر در بخش مدیریت تیم‌ها</p>
+                        </div>
+
+                    </div>
+
+                    <div class="activity-list" id="teamActivities"></div>
+
+                </section>
+
+
+                <!-- فوتر -->
+                <footer class="page-footer">
+
+                    <span>
+                        سامانه مدیریت بحران | با همکاری جمعیت هلال احمر
+                    </span>
+
+                    <span id="lastUpdated"></span>
+
+                </footer>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- مودال ایجاد تیم جدید -->
+    <div class="modal-overlay" id="teamModal" hidden>
+
+        <div class="custom-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3>ایجاد تیم جدید</h3>
+                    <p>اطلاعات اولیه تیم امدادی را وارد کنید.</p>
+                </div>
+
+                <button class="modal-close" data-close="teamModal">
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+
+            <form id="teamForm">
+
+                <div class="form-group">
+
+                    <label for="teamCode">کد تیم</label>
+
+                    <input
+                        class="form-control"
+                        type="text"
+                        id="teamCode"
+                        placeholder="مثلاً T-106"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="teamName">نام تیم</label>
+
+                    <input
+                        class="form-control"
+                        type="text"
+                        id="teamName"
+                        placeholder="نام تیم امدادی"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="teamStatus">وضعیت عملیاتی نمونه</label>
+
+                    <select class="form-control" id="teamStatus">
+
+                        <option value="active">فعال</option>
+                        <option value="standby">آماده‌باش</option>
+                        <option value="inactive">غیرفعال</option>
+
+                    </select>
+
+                    <small class="field-hint">
+                        این وضعیت در نسخه آزمایشی نمایش داده می‌شود.
+                    </small>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        data-close="teamModal"
+                    >
+                        انصراف
+                    </button>
+
+                    <button type="submit" class="primary-button">
+                        <i data-lucide="plus"></i>
+                        ثبت تیم
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- مودال جزئیات تیم و مدیریت اعضا -->
+    <div class="modal-overlay" id="detailsModal" hidden>
+
+        <div class="custom-modal details-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3 id="detailsTeamName">جزئیات تیم</h3>
+                    <p id="detailsTeamCode">کد تیم</p>
+                </div>
+
+                <button class="modal-close" data-close="detailsModal">
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+
+            <!-- خلاصه اطلاعات تیم -->
+            <div class="team-details-summary" id="teamDetailsSummary"></div>
+
+
+            <!-- اعضای تیم -->
+            <div class="members-section">
+
+                <div class="members-heading">
+
+                    <div>
+                        <h4>اعضای تیم</h4>
+                        <p>
+                            مدیریت اعضا، تغییر سرپرست و خروج داوطلب از تیم
+                        </p>
+                    </div>
+
+                    <span class="panel-tag" id="memberCount">
+                        ۰ عضو
+                    </span>
+
+                </div>
+
+                <div class="members-list" id="membersList"></div>
+
+            </div>
+
+
+            <!-- افزودن داوطلب -->
+            <div class="add-member-section">
+
+                <h4>افزودن داوطلب به تیم</h4>
+
+                <form id="memberForm">
+
+                    <div class="form-group">
+
+                        <label for="volunteerSelect">انتخاب داوطلب</label>
+
+                        <select
+                            class="form-control"
+                            id="volunteerSelect"
+                            required
+                        >
+
+                            <option value="">انتخاب داوطلب</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="memberRole">نقش در تیم</label>
+
+                        <select
+                            class="form-control"
+                            id="memberRole"
+                            required
+                        >
+
+                            <option value="member">عضو</option>
+                            <option value="leader">سرپرست</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="membershipDate">تاریخ عضویت</label>
+
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="membershipDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button type="submit" class="primary-button">
+                        <i data-lucide="user-plus"></i>
+                        افزودن به تیم
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- پیام اطلاع‌رسانی -->
+    <div class="toast-message" id="toastMessage">
+
+        <i data-lucide="check-circle-2"></i>
+
+        <span id="toastText"></span>
+
+    </div>
+
+
+    <!-- فایل جاوااسکریپت -->
+    <script src="./team.js"></script>
+
+</body>
+
+</html>

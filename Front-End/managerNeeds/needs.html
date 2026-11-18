@@ -1,0 +1,997 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#991B1F">
+
+    <title>مدیریت نیازها | سامانه مدیریت بحران</title>
+
+    <link rel="stylesheet" href="../managerDashboard/dashboard.css">
+    <link rel="stylesheet" href="./needs.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <svg viewBox="0 0 48 48"
+                     xmlns="http://www.w3.org/2000/svg"
+                     role="img"
+                     aria-label="نشان هلال قرمز">
+                    <circle cx="24" cy="24" r="19" fill="#E31E24"/>
+                    <circle cx="32" cy="17" r="17" fill="#FFFFFF"/>
+                </svg>
+            </div>
+
+            <div class="brand-text">
+                <h2>سامانه مدیریت بحران</h2>
+                <span>با همکاری جمعیت هلال احمر</span>
+            </div>
+
+            <button class="sidebar-close"
+                    id="sidebarClose"
+                    aria-label="بستن منو">
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">منوی اصلی</span>
+
+            <nav class="sidebar-nav">
+
+                <a class="nav-item" href="../map/map.html">
+                    <i data-lucide="map"></i>
+                    <span>نقشه بحران</span>
+                </a>
+
+                <a class="nav-item" href="../managerDashboard/dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>داشبورد مدیر</span>
+                </a>
+
+                <a class="nav-item" href="../incidents/incidents.html">
+                    <i data-lucide="siren"></i>
+                    <span>حادثه‌ها</span>
+                </a>
+
+                <a class="nav-item" href="../regions/regions.html">
+                    <i data-lucide="map-pin"></i>
+                    <span>مناطق</span>
+                </a>
+
+                <a class="nav-item active" href="../managerNeeds/needs.html">
+                    <i data-lucide="clipboard-list"></i>
+                    <span>نیازها</span>
+                </a>
+
+                <a class="nav-item" href="../team/team.html">
+                    <i data-lucide="users-round"></i>
+                    <span>تیم‌های امدادی</span>
+                </a>
+
+                
+                <a class="nav-item" href="../volunteers/volunteers.html">
+                    <i data-lucide="user-round"></i>
+                    <span>داوطلبان</span>
+                </a>
+                
+                <a class="nav-item" href="../allocation/allocation.html">
+                    <i data-lucide="clipboard-check"></i>
+                    <span>تخصیص</span>
+                </a>
+
+                <a class="nav-item" href="../resources/resources.html">
+                    <i data-lucide="package"></i>
+                    <span>منابع و انبار</span>
+                </a>
+
+                <a class="nav-item" href="../reports/reports.html">
+                    <i data-lucide="chart-no-axes-combined"></i>
+                    <span>گزارش‌ها</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                <span>سامانه فعال است</span>
+            </div>
+
+            <div class="sidebar-user">
+
+                <div class="user-avatar">
+                    <i data-lucide="user-round"></i>
+                </div>
+
+                <div class="user-info">
+                    <strong>مدیر سیستم</strong>
+                    <span>مدیر بحران</span>
+                </div>
+
+                <span>⋮</span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="topbar">
+
+            <div class="topbar-right">
+
+                <button class="icon-button"
+                        id="sidebarToggle"
+                        aria-label="باز و بسته کردن منو"
+                        aria-expanded="false">
+                    <i data-lucide="panel-right"></i>
+                </button>
+
+                <div class="page-heading">
+                    <h1>مدیریت نیازها</h1>
+                    <p>ثبت، بررسی و مدیریت نیازهای مناطق آسیب‌دیده</p>
+                </div>
+
+            </div>
+
+
+            <div class="topbar-left">
+
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    وضعیت سامانه: آنلاین
+                </div>
+
+                <button class="icon-button notification"
+                        aria-label="اعلان‌ها">
+                    <i data-lucide="bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button class="icon-button"
+                        id="themeToggle"
+                        aria-label="تغییر پوسته">
+                    <i data-lucide="moon"></i>
+                </button>
+
+                <div class="header-profile">
+
+                    <div class="user-avatar">
+                        <i data-lucide="user-round"></i>
+                    </div>
+
+                    <span>مدیر سیستم</span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Page Content -->
+        <section class="page-content needs-page">
+
+
+            <!-- Page Intro -->
+            <div class="page-intro">
+
+                <div>
+
+                    <div class="breadcrumb">
+                        مرکز عملیات
+                        <span>/</span>
+                        مدیریت نیازها
+                    </div>
+
+                    <h2>مدیریت نیازهای مناطق</h2>
+
+                    <p>
+                        تمام نیازهای ثبت‌شده را بررسی، اولویت‌بندی
+                        و برای تأمین آن‌ها برنامه‌ریزی کنید.
+                    </p>
+
+                </div>
+
+
+                <div class="intro-actions">
+
+                    <div class="intro-date" id="todayLabel">
+                        <i data-lucide="calendar-days"></i>
+                        امروز
+                    </div>
+
+                    <button class="primary-button"
+                            id="newNeedBtn">
+
+                        <i data-lucide="plus"></i>
+                        ثبت نیاز جدید
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Notice -->
+            <div class="needs-notice">
+
+                <div class="notice-icon">
+                    <i data-lucide="info"></i>
+                </div>
+
+                <div>
+
+                    <strong>مدیریت و اولویت‌بندی نیازها</strong>
+
+                    <p>
+                        نیازهای ثبت‌شده را بر اساس منطقه، نوع و اولویت
+                        بررسی کنید. برای تأمین هر نیاز می‌توانید به بخش تخصیص مراجعه کنید.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Statistics -->
+            <section class="needs-stats-grid">
+
+
+                <article class="need-stat-card">
+
+                    <div class="need-stat-icon red">
+                        <i data-lucide="clipboard-list"></i>
+                    </div>
+
+                    <div class="need-stat-info">
+
+                        <span>کل نیازهای ثبت‌شده</span>
+
+                        <strong id="totalNeeds">۰</strong>
+
+                        <small>تمام نیازهای موجود</small>
+
+                    </div>
+
+                </article>
+
+
+                <article class="need-stat-card">
+
+                    <div class="need-stat-icon orange">
+                        <i data-lucide="alert-triangle"></i>
+                    </div>
+
+                    <div class="need-stat-info">
+
+                        <span>نیازهای فوری</span>
+
+                        <strong id="urgentNeeds">۰</strong>
+
+                        <small>نیازهای دارای اولویت فوری</small>
+
+                    </div>
+
+                </article>
+
+
+                <article class="need-stat-card">
+
+                    <div class="need-stat-icon blue">
+                        <i data-lucide="clock"></i>
+                    </div>
+
+                    <div class="need-stat-info">
+
+                        <span>نیازهای بدون تخصیص</span>
+
+                        <strong id="uncoveredNeeds">۰</strong>
+
+                        <small>نیازهایی که هنوز پوشش ندارند</small>
+
+                    </div>
+
+                </article>
+
+
+                <article class="need-stat-card">
+
+                    <div class="need-stat-icon green">
+                        <i data-lucide="check-circle-2"></i>
+                    </div>
+
+                    <div class="need-stat-info">
+
+                        <span>نیازهای تأمین‌شده</span>
+
+                        <strong id="coveredNeeds">۰</strong>
+
+                        <small>نیازهای دارای پوشش کامل</small>
+
+                    </div>
+
+                </article>
+
+
+            </section>
+
+
+            <!-- Needs Overview -->
+            <section class="panel needs-overview-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>نمای کلی نیازها</h3>
+                        <p>وضعیت پوشش نیازهای ثبت‌شده بر اساس تخصیص‌ها</p>
+                    </div>
+
+                    <span class="panel-tag">
+                        <i data-lucide="chart-pie"></i>
+                        گزارش وضعیت
+                    </span>
+
+                </div>
+
+
+                <div class="coverage-overview">
+
+                    <div class="coverage-summary">
+
+                        <div class="coverage-summary-icon">
+                            <i data-lucide="package-check"></i>
+                        </div>
+
+                        <div>
+                            <strong id="coveragePercent">۰٪</strong>
+                            <span>درصد پوشش نیازها</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="coverage-progress-area">
+
+                        <div class="coverage-progress-labels">
+
+                            <span>میزان پوشش کلی</span>
+
+                            <strong id="coverageCount">
+                                ۰ از ۰ نیاز
+                            </strong>
+
+                        </div>
+
+                        <div class="coverage-progress">
+                            <span id="coverageProgressBar"></span>
+                        </div>
+
+                        <div class="coverage-legend">
+
+                            <span>
+                                <i class="legend-dot covered"></i>
+                                تأمین‌شده
+                            </span>
+
+                            <span>
+                                <i class="legend-dot uncovered"></i>
+                                بدون تخصیص
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Needs List -->
+            <section class="panel needs-list-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>فهرست نیازهای ثبت‌شده</h3>
+                        <p>مشاهده و مدیریت نیازهای تمام مناطق</p>
+                    </div>
+
+                    <span class="panel-tag" id="needsCountLabel">
+                        ۰ نیاز
+                    </span>
+
+                </div>
+
+
+                <!-- Filters -->
+                <div class="needs-toolbar">
+
+
+                    <div class="needs-search">
+
+                        <i data-lucide="search"></i>
+
+                        <input
+                            type="text"
+                            id="needsSearch"
+                            placeholder="جستجو بر اساس عنوان یا کد نیاز...">
+
+                    </div>
+
+
+                    <select id="regionFilter"
+                            class="needs-filter">
+
+                        <option value="all">تمام مناطق</option>
+
+                    </select>
+
+
+                    <select id="typeFilter"
+                            class="needs-filter">
+
+                        <option value="all">تمام انواع نیاز</option>
+
+                    </select>
+
+
+                    <select id="priorityFilter"
+                            class="needs-filter">
+
+                        <option value="all">تمام اولویت‌ها</option>
+
+                        <option value="urgent">فوری</option>
+
+                        <option value="high">زیاد</option>
+
+                        <option value="medium">متوسط</option>
+
+                        <option value="low">کم</option>
+
+                    </select>
+
+
+                    <button class="filter-reset-button"
+                            id="resetNeedsFilters">
+
+                        <i data-lucide="rotate-ccw"></i>
+                        پاک کردن فیلترها
+
+                    </button>
+
+                </div>
+
+
+                <!-- Table -->
+                <div class="needs-table-wrapper">
+
+                    <table class="needs-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>کد نیاز</th>
+
+                                <th>عنوان نیاز</th>
+
+                                <th>منطقه</th>
+
+                                <th>نوع نیاز</th>
+
+                                <th>تعداد موردنیاز</th>
+
+                                <th>اولویت</th>
+
+                                <th>تاریخ ثبت</th>
+
+                                <th>وضعیت پوشش</th>
+
+                                <th>عملیات</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="needsTableBody">
+                            <!-- JavaScript -->
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Empty State -->
+                <div class="needs-empty-state"
+                     id="needsEmptyState"
+                     hidden>
+
+                    <div class="empty-icon">
+                        <i data-lucide="clipboard-x"></i>
+                    </div>
+
+                    <h3>نیازی پیدا نشد</h3>
+
+                    <p>
+                        با فیلترهای انتخاب‌شده موردی وجود ندارد.
+                    </p>
+
+                    <button class="secondary-button"
+                            id="emptyResetBtn">
+                        پاک کردن فیلترها
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- Recent Activities -->
+            <section class="panel needs-activity-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>آخرین فعالیت‌ها</h3>
+                        <p>آخرین تغییرات ثبت‌شده در بخش نیازها</p>
+                    </div>
+
+                </div>
+
+                <div class="needs-activity-list"
+                     id="needsActivityList">
+                    <!-- JavaScript -->
+                </div>
+
+            </section>
+
+
+            <!-- Footer -->
+            <footer class="page-footer">
+
+                <span>
+                    سامانه مدیریت بحران | با همکاری جمعیت هلال احمر
+                </span>
+
+                <span id="lastUpdated"></span>
+
+            </footer>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================
+     NEW / EDIT NEED MODAL
+===================================== -->
+
+<div class="modal-overlay"
+     id="needModal"
+     hidden>
+
+
+    <div class="custom-modal need-modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3 id="needModalTitle">
+                    ثبت نیاز جدید
+                </h3>
+
+                <p>
+                    اطلاعات موردنیاز را با دقت وارد کنید.
+                </p>
+
+            </div>
+
+
+            <button class="modal-close"
+                    data-close="needModal"
+                    aria-label="بستن">
+
+                <i data-lucide="x"></i>
+
+            </button>
+
+        </div>
+
+
+        <form id="needForm">
+
+            <input type="hidden" id="editingNeedId">
+
+
+            <div class="need-form-grid">
+
+
+                <!-- Need Title -->
+                <div class="form-group">
+
+                    <label for="needTitle">
+                        عنوان نیاز
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="needTitle"
+                        class="form-control"
+                        placeholder="مثلاً تأمین آب آشامیدنی"
+                        maxlength="120"
+                        required>
+
+                </div>
+
+
+                <!-- Region -->
+                <div class="form-group">
+
+                    <label for="needRegion">
+                        منطقه آسیب‌دیده
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="needRegion"
+                        class="form-control"
+                        required>
+
+                        <option value="">انتخاب منطقه</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Need Type -->
+                <div class="form-group">
+
+                    <label for="needType">
+                        نوع نیاز
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="needType"
+                        class="form-control"
+                        required>
+
+                        <option value="">انتخاب نوع نیاز</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Quantity -->
+                <div class="form-group">
+
+                    <label for="needQuantity">
+                        تعداد موردنیاز
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="needQuantity"
+                        class="form-control"
+                        min="1"
+                        step="1"
+                        placeholder="تعداد موردنیاز"
+                        required>
+
+                </div>
+
+
+                <!-- Unit -->
+                <div class="form-group">
+
+                    <label for="needUnit">
+                        واحد شمارش
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="needUnit"
+                        class="form-control"
+                        required>
+
+                        <option value="">انتخاب واحد</option>
+
+                        <option value="عدد">عدد</option>
+
+                        <option value="بسته">بسته</option>
+
+                        <option value="دستگاه">دستگاه</option>
+
+                        <option value="لیتر">لیتر</option>
+
+                        <option value="کیلوگرم">کیلوگرم</option>
+
+                        <option value="نفر">نفر</option>
+
+                        <option value="متر">متر</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Priority -->
+                <div class="form-group">
+
+                    <label for="needPriority">
+                        اولویت نیاز
+                        <span class="required">*</span>
+                    </label>
+
+                    <select
+                        id="needPriority"
+                        class="form-control"
+                        required>
+
+                        <option value="">انتخاب اولویت</option>
+
+                        <option value="urgent">فوری</option>
+
+                        <option value="high">زیاد</option>
+
+                        <option value="medium">متوسط</option>
+
+                        <option value="low">کم</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Reporter -->
+                <div class="form-group">
+
+                    <label for="needReporter">
+                        گزارش‌دهنده
+                    </label>
+
+                    <input
+                        type="text"
+                        id="needReporter"
+                        class="form-control"
+                        placeholder="نام گزارش‌دهنده">
+
+                </div>
+
+
+                <!-- Registration Date -->
+                <div class="form-group">
+
+                    <label for="needDate">
+                        تاریخ ثبت
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="needDate"
+                        class="form-control"
+                        required>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="form-group full-width">
+
+                    <label for="needDescription">
+                        توضیحات تکمیلی
+                    </label>
+
+                    <textarea
+                        id="needDescription"
+                        class="form-control"
+                        rows="4"
+                        maxlength="1000"
+                        placeholder="توضیحات مربوط به نیاز و شرایط منطقه..."></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Form Notice -->
+            <div class="need-form-notice">
+
+                <i data-lucide="info"></i>
+
+                <span>
+                    وضعیت پوشش نیاز پس از ثبت تخصیص و بر اساس
+                    مقدار تخصیص‌یافته محاسبه می‌شود.
+                </span>
+
+            </div>
+
+
+            <!-- Modal Actions -->
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    data-close="needModal">
+
+                    انصراف
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    <i data-lucide="check"></i>
+
+                    <span id="needSubmitText">
+                        ثبت نیاز
+                    </span>
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     NEED DETAILS MODAL
+===================================== -->
+
+<div class="modal-overlay"
+     id="needDetailsModal"
+     hidden>
+
+
+    <div class="custom-modal need-details-modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h3>جزئیات نیاز</h3>
+
+                <p id="detailsNeedCode"></p>
+
+            </div>
+
+
+            <button class="modal-close"
+                    data-close="needDetailsModal">
+
+                <i data-lucide="x"></i>
+
+            </button>
+
+        </div>
+
+
+        <div id="needDetailsContent">
+            <!-- JavaScript -->
+        </div>
+
+
+        <div class="related-allocations-section">
+
+            <div class="related-section-heading">
+
+                <div>
+                    <h4>تخصیص‌های مرتبط</h4>
+                    <p>تخصیص‌های ثبت‌شده برای این نیاز</p>
+                </div>
+
+                <span id="relatedAllocationCount">
+                    ۰ تخصیص
+                </span>
+
+            </div>
+
+
+            <div id="relatedAllocationsList"
+                 class="related-allocations-list">
+                <!-- JavaScript -->
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="secondary-button"
+                data-close="needDetailsModal">
+
+                بستن
+
+            </button>
+
+
+            <button
+                type="button"
+                class="primary-button"
+                id="goToAllocationBtn">
+
+                <i data-lucide="clipboard-check"></i>
+
+                رفتن به صفحه تخصیص
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- Toast -->
+<div class="toast-message" id="toastMessage">
+
+    <i data-lucide="check-circle-2"></i>
+
+    <span id="toastText"></span>
+
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="./needs.js"></script>
+</body>
+
+</html>
